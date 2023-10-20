@@ -2372,7 +2372,7 @@ class GoogleParser(object):
         cw = lambda s: re.sub(r'[ \t\n\r]+', ' ', s) if s is not None else s
 
         index = 0
-        for div_g in tree.select_all(div_selector):
+        for div_g in tree.select_all('div.MjjYud'):
             if div_g.select('.hp-xpdbox'):
                 # Skip smart cards.
                 continue
@@ -2412,9 +2412,15 @@ class GoogleParser(object):
 
                     title_node = div_g.select(title_selector)
 
-
+                    if title_node and 'yuRUbf' not in title_node.classes:
+                        logger.debug('unexpected title node class(es): expected %r, got %r',
+                                     'yuRUbf', ' '.join(title_node.classes))
+                    if details_node and 'IsZvec' not in details_node.classes:
+                        logger.debug('unexpected details node class(es): expected %r, got %r',
+                                     'IsZvec', ' '.join(details_node.classes))
                     a = title_node.select('a')
-                    h3 = a.select(h3_selector)
+                    h3 = a.select('h3')
+
                     title = h3.text
 
                     if self.news:
@@ -2424,6 +2430,8 @@ class GoogleParser(object):
                     if details_node:
                         abstract_node = details_node.select('span')
                         metadata_node = details_node.select('.f, span ~ div')
+                        # logger.debug("RESULT: ")
+                        # logger.debug(abstract_node)
                 url = self.unwrap_link(a.attr('href'))
                 matched_keywords = []
                 abstract = ''
