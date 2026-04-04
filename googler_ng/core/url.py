@@ -67,7 +67,7 @@ class GoogleUrl(object):
         self._query_dict = {
             'ie': 'UTF-8',
             'oe': 'UTF-8',
-            'gbv': '1',  
+            # 'gbv': 1
             'sei': base64.encodebytes(uuid.uuid4().bytes).decode("ascii").rstrip('=\n').replace('/', '_'),
         }
 
