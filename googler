@@ -2356,15 +2356,15 @@ class GoogleParser(object):
         # So we set Title as Metadata, append NewsAge to Abstract and
         # clear Metadata to avoid showing the same Title and Metadata
         if self.news:
-            div_selector = 'div[data-hveid]'
+            div_selector = 'div.W0kfrc'
             title_selector = 'div'
-            h3_selector = 'div'
+            h3_selector = 'div.n0jPhd'
         elif self.videos:
             div_selector = 'video-voyager'
             title_selector = 'div.ct3b9e'
             h3_selector = 'h3'
         else:
-            div_selector = 'div.tF2Cxc'
+            div_selector = 'div.MjjYud'
             title_selector = 'div.yuRUbf'
             h3_selector = 'h3'
 
@@ -2372,7 +2372,7 @@ class GoogleParser(object):
         cw = lambda s: re.sub(r'[ \t\n\r]+', ' ', s) if s is not None else s
 
         index = 0
-        for div_g in tree.select_all('div.MjjYud'):
+        for div_g in tree.select_all(div_selector):
             if div_g.select('.hp-xpdbox'):
                 # Skip smart cards.
                 continue
@@ -2419,7 +2419,7 @@ class GoogleParser(object):
                         logger.debug('unexpected details node class(es): expected %r, got %r',
                                      'IsZvec', ' '.join(details_node.classes))
                     a = title_node.select('a')
-                    h3 = a.select('h3')
+                    h3 = a.select(h3_selector)
 
                     title = h3.text
 
@@ -2428,7 +2428,8 @@ class GoogleParser(object):
                         #title = newstitle[1]
 
                     if details_node:
-                        abstract_node = details_node.select('span')
+                        span_nodes = details_node.select_all('span')
+                        abstract_node = span_nodes[-1] if span_nodes else None
                         metadata_node = details_node.select('.f, span ~ div')
                         # logger.debug("RESULT: ")
                         # logger.debug(abstract_node)
