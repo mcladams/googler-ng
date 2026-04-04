@@ -14,13 +14,6 @@ from googler_ng.parser.google import GoogleParser
 from googler_ng.ui.printer import ResultPrinter
 from googler_ng.utils.helpers import printerr, open_url
 
-try:
-    from googler_ng.utils.upgrade import RAW_DOWNLOAD_REPO_BASE, _EPOCH_
-except ImportError:
-    # If phase not completed etc.
-    RAW_DOWNLOAD_REPO_BASE = 'https://raw.githubusercontent.com/grassdionera/googler'
-    _EPOCH_ = '20220718'
-
 logger = logging.getLogger(__name__)
 
 class GooglerCmdException(Exception):
@@ -117,46 +110,10 @@ class GooglerCmd(object):
 
     def warn_no_results(self):
         printerr('No results.')
-        if self.no_results_instructions_shown:
-            return
-
-        try:
-            import json
-            import urllib.error
-            import urllib.request
-            info_json_url = '%s/master/info.json' % RAW_DOWNLOAD_REPO_BASE
-            logger.debug('Fetching %s for project status...', info_json_url)
-            try:
-                with urllib.request.urlopen(info_json_url, timeout=5) as response:
-                    try:
-                        info = json.load(response)
-                    except Exception:
-                        logger.error('Failed to decode project status from %s', info_json_url)
-                        raise RuntimeError
-            except urllib.error.HTTPError as e:
-                logger.error('Failed to fetch project status from %s: HTTP %d', info_json_url, e.code)
-                raise RuntimeError
-            epoch = info.get('epoch')
-            if epoch > _EPOCH_:
-                printerr('Your version of googler is broken due to Google-side changes.')
-                tracking_issue = info.get('tracking_issue')
-                fixed_on_master = info.get('fixed_on_master')
-                fixed_in_release = info.get('fixed_in_release')
-                if fixed_in_release:
-                    printerr('A new version, %s, has been released to address the changes.' % fixed_in_release)
-                    printerr('Please upgrade to the latest version.')
-                elif fixed_on_master:
-                    printerr('The fix has been pushed to master, pending a release.')
-                    printerr('Please download the master version https://git.io/googler or wait for a release.')
-                else:
-                    printerr('The issue is tracked at https://github.com/grassdionera/googler/issues/%s.' % tracking_issue)
-                return
-        except RuntimeError:
-            pass
-
-        printerr('If you believe this is a bug, please review '
-                 'https://git.io/googler-no-results before submitting a bug report.')
-        self.no_results_instructions_shown = True
+        if not self.no_results_instructions_shown:
+            printerr('If you believe this is a bug, Google may have changed their layout.')
+            printerr('Please check for updates to googler-ng or report it on GitHub.')
+            self.no_results_instructions_shown = True
 
     @require_keywords
     def display_results(self, prelude='\n', json_output=False):

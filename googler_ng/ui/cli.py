@@ -12,25 +12,14 @@ from googler_ng.ui.colors import COLORMAP, Colors
 from googler_ng.ui.repl import GooglerCmd
 from googler_ng.utils.helpers import check_stdout_encoding, open_url, text_browsers
 
-try:
-    from googler_ng.utils.upgrade import system_is_windows, check_new_version, self_upgrade, ENABLE_SELF_UPGRADE_MECHANISM
-    from googler_ng.utils.completion import completer_run # Not extracted yet, but conceptually good
-except ImportError:
-    ENABLE_SELF_UPGRADE_MECHANISM = False
-    def system_is_windows():
-        return sys.platform in {'win32', 'cygwin'}
-    def check_new_version():
-        pass
-    def self_upgrade(include_git=False):
-        pass
-    def completer_run(prefix):
-        pass
+def system_is_windows():
+    return sys.platform in {'win32', 'cygwin'}
 
 def python_version():
     return '%d.%d.%d' % sys.version_info[:3]
 
 logger = logging.getLogger(__name__)
-_VERSION_ = '4.3.13'
+_VERSION_ = '0.1.0'
 
 def set_win_console_mode():
     if platform.release() == '10':
@@ -215,11 +204,6 @@ def parse_args(args=None, namespace=None):
            const=socket.AF_INET6, default=0,
            help='only connect over IPv6')
     addarg('keywords', nargs='*', metavar='KEYWORD', help='search keywords')
-    if ENABLE_SELF_UPGRADE_MECHANISM and not system_is_windows():
-        addarg('-u', '--upgrade', action='store_true',
-               help='perform in-place self-upgrade')
-        addarg('--include-git', action='store_true',
-               help='when used with --upgrade, get latest git master')
     addarg('-v', '--version', action='version', version=_VERSION_)
     addarg('-d', '--debug', action='store_true', help='enable debugging')
     addarg('-D', '--debugger', action='store_true', help=argparse.SUPPRESS)
@@ -238,18 +222,14 @@ def main():
         opts = parse_args()
 
         if opts.debug:
-            logger.setLevel(logging.DEBUG)
+            logging.basicConfig(level=logging.DEBUG, format='[DEBUG] %(message)s')
             logger.debug('googler version %s', _VERSION_)
             logger.debug('Python version %s', python_version())
             logger.debug('Platform: %s', platform.platform())
-            check_new_version()
 
         if opts.debugger:
             # We used to set a global debugger variable, but that's handled locally now or not used.
             pass
-
-        if opts.complete is not None:
-            completer_run(opts.complete)
 
         if hasattr(opts, 'upgrade') and opts.upgrade:
             self_upgrade(include_git=opts.include_git)

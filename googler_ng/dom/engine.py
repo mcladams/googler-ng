@@ -1,6 +1,7 @@
 ### begin dim (DOM implementation with CSS support) ###
 ### https://github.com/zmwangx/dim/blob/master/dim.py ###
 
+from typing import Any, Dict, Generator, Iterable, Iterator, List, Match, Optional, Sequence, Tuple, Union, cast
 import html
 import re
 from collections import OrderedDict

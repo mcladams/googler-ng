@@ -1,8 +1,8 @@
 SELECTORS = {
     'news': {
-        'div': 'div.W0kfrc',
-        'title': 'div',
-        'h3': 'div.n0jPhd',
+        'div': 'div.ZINbbc.xpd',
+        'title': 'div.kCrYT',
+        'h3': 'div.BNeawe',
     },
     'videos': {
         'div': 'video-voyager',
@@ -10,8 +10,8 @@ SELECTORS = {
         'h3': 'h3',
     },
     'default': {
-        'div': 'div.MjjYud',
-        'title': 'div.yuRUbf',
-        'h3': 'h3',
+        'div': 'div.ZINbbc.xpd',
+        'title': 'div.kCrYT',
+        'h3': 'div.BNeawe',
     }
 }

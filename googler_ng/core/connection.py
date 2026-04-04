@@ -14,7 +14,7 @@ from googler_ng.utils.helpers import time_it
 
 logger = logging.getLogger(__name__)
 
-USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36'
+USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 
 
 def https_proxy_from_environment():
@@ -377,14 +377,28 @@ class GoogleConnection(object):
 
         """
         logger.debug('Fetching URL %s', url)
-        self._conn.request('GET', url, None, {
-            'Accept': 'text/html',
-            'Accept-Encoding': 'gzip',
-            'User-Agent': USER_AGENT,
-            'Cookie': self.cookie,
+        headers = {
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+            'Accept-Encoding': 'gzip, deflate',
+            'Accept-Language': 'en-US,en;q=0.9',
             'Connection': 'keep-alive',
-            'DNT': '1',
-        })
+            'Cookie': self.cookie,
+            'Sec-Ch-Ua': '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
+            'Sec-Ch-Ua-Mobile': '?0',
+            'Sec-Ch-Ua-Platform': '"Windows"',
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'none',
+            'Sec-Fetch-User': '?1',
+            'Upgrade-Insecure-Requests': '1',
+            'User-Agent': USER_AGENT,
+        }
+        
+        # Strip out empty cookies so we don't send malformed headers
+        if not self.cookie:
+            del headers['Cookie']
+
+        self._conn.request('GET', url, None, headers)
         self._resp = self._conn.getresponse()
         if self.cookie == '':
             complete_cookie = self._resp.getheader('Set-Cookie')
