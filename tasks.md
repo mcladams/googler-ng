@@ -2,23 +2,22 @@
   - `[x]` Create `pyproject.toml`
   - `[x]` Create directories (`googler_ng/core`, `googler_ng/dom`, `googler_ng/parser`, `googler_ng/config`, `googler_ng/ui`, `googler_ng/utils`)
   - `[x]` Create `__init__.py` files
-- `[ ]` Phase 2: Extract DOM Engine
-  - `[ ]` Move `dim` DOM engine classes to `googler_ng/dom/engine.py`
-- `[ ]` Phase 3: Extract Utilities
-  - `[ ]` Move `TrackedTextwrap` to `googler_ng/utils/text.py`
-  - `[ ]` Move helper functions (`open_url`, `unwrap_link`, `clean_url`, etc.) to `googler_ng/utils/helpers.py`
-  - `[ ]` Move upgrade logic to `googler_ng/utils/upgrade.py`
-- `[ ]` Phase 4: Core Network & URL
-  - `[ ]` Move URL construction `GoogleUrl` to `googler_ng/core/url.py`
-  - `[ ]` Move internet handling to `googler_ng/core/connection.py`
-- `[ ]` Phase 5: Parser & Config
-  - `[ ]` Move selectors configurations to `googler_ng/config/selectors.py`
-  - `[ ]` Move data classes to `googler_ng/parser/models.py`
-  - `[ ]` Move `GoogleParser` to `googler_ng/parser/google.py`
-- `[ ]` Phase 6: User Interface (CLI & REPL)
-  - `[ ]` Move UI constants (COLORMAP) to `googler_ng/ui/colors.py`
-  - `[ ]` Move REPL `GooglerCmd` to `googler_ng/ui/repl.py`
-  - `[ ]` Move CLI parsing and main logic to `googler_ng/ui/cli.py`
+- `[x]` Phase 2: Extract DOM Engine
+  - `[x]` Move `dim` DOM engine classes to `googler_ng/dom/engine.py`
+- `[x]` Phase 3: Extract Utilities
+  - `[x]` Move `TrackedTextwrap` to `googler_ng/utils/text.py`
+  - `[x]` Move helper functions (`open_url`, `unwrap_link`, `clean_url`, etc.) to `googler_ng/utils/helpers.py`
+- `[x]` Phase 4: Core Network & URL
+  - `[x]` Move URL construction `GoogleUrl` to `googler_ng/core/url.py`
+  - `[x]` Move internet handling to `googler_ng/core/connection.py`
+- `[x]` Phase 5: Parser & Config
+  - `[x]` Move selectors configurations to `googler_ng/config/selectors.py`
+  - `[x]` Move data classes to `googler_ng/parser/models.py`
+  - `[x]` Move `GoogleParser` to `googler_ng/parser/google.py`
+- `[x]` Phase 6: User Interface (CLI & REPL)
+  - `[x]` Move UI constants (COLORMAP) to `googler_ng/ui/colors.py`
+  - `[x]` Move REPL `GooglerCmd` to `googler_ng/ui/repl.py`
+  - `[x]` Move CLI parsing and main logic to `googler_ng/ui/cli.py`
 - `[ ]` Phase 7: Assembly & Cleanup
   - `[ ]` Link imports across newly created files using absolute imports (e.g., `from googler_ng.core.url import GoogleUrl`).
   - `[ ]` Create `googler_ng/__main__.py` with the CLI entry point.

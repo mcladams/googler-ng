@@ -27,7 +27,7 @@ Please split the code into the following package structure under a new `googler_
 - googler_ng/utils/:
    - `helpers.py`: Utility functions (`open_url`, `unwrap_link`).
    - `text.py`: Text formatting wrappers such as `TrackedTextwrap` and the monkeypatch logic.
-   - `upgrade.py`: Self-upgrade logic.
+Note: no self-upgrade logic is required
 
 # Key Requirements
 - **Modernization:** Use Python 3.8+ features (Type Hinting, f-strings, and `class Name:` instead of `class Name(object):`, and standard dataclasses for `Result`/`Sitelink`).
