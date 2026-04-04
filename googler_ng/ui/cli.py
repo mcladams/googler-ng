@@ -7,7 +7,7 @@ import socket
 import sys
 import textwrap
 
-from googler_ng.core.connection import https_proxy_from_environment
+# from googler_ng.core.connection import https_proxy_from_environment
 from googler_ng.ui.colors import COLORMAP, Colors
 from googler_ng.ui.repl import GooglerCmd
 from googler_ng.utils.helpers import check_stdout_encoding, open_url, text_browsers
@@ -182,7 +182,7 @@ def parse_args(args=None, namespace=None):
     addarg('-e', '--exclude', dest='exclude', action='append', metavar='SITE',
            help='exclude site from results')
     addarg('--unfilter', action='store_true', help='do not omit similar results')
-    addarg('-p', '--proxy', default=https_proxy_from_environment(),
+    addarg('-p', '--proxy', default=os.getenv('https_proxy'),
            help="""tunnel traffic through an HTTP proxy;
            PROXY is of the form [http://][user:password@]proxyhost[:port]""")
     addarg('--noua', action='store_true', help=argparse.SUPPRESS)
