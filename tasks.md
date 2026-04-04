@@ -1,0 +1,27 @@
+- `[x]` Phase 1: Setup directory structure and `pyproject.toml`
+  - `[x]` Create `pyproject.toml`
+  - `[x]` Create directories (`googler_ng/core`, `googler_ng/dom`, `googler_ng/parser`, `googler_ng/config`, `googler_ng/ui`, `googler_ng/utils`)
+  - `[x]` Create `__init__.py` files
+- `[ ]` Phase 2: Extract DOM Engine
+  - `[ ]` Move `dim` DOM engine classes to `googler_ng/dom/engine.py`
+- `[ ]` Phase 3: Extract Utilities
+  - `[ ]` Move `TrackedTextwrap` to `googler_ng/utils/text.py`
+  - `[ ]` Move helper functions (`open_url`, `unwrap_link`, `clean_url`, etc.) to `googler_ng/utils/helpers.py`
+  - `[ ]` Move upgrade logic to `googler_ng/utils/upgrade.py`
+- `[ ]` Phase 4: Core Network & URL
+  - `[ ]` Move URL construction `GoogleUrl` to `googler_ng/core/url.py`
+  - `[ ]` Move internet handling to `googler_ng/core/connection.py`
+- `[ ]` Phase 5: Parser & Config
+  - `[ ]` Move selectors configurations to `googler_ng/config/selectors.py`
+  - `[ ]` Move data classes to `googler_ng/parser/models.py`
+  - `[ ]` Move `GoogleParser` to `googler_ng/parser/google.py`
+- `[ ]` Phase 6: User Interface (CLI & REPL)
+  - `[ ]` Move UI constants (COLORMAP) to `googler_ng/ui/colors.py`
+  - `[ ]` Move REPL `GooglerCmd` to `googler_ng/ui/repl.py`
+  - `[ ]` Move CLI parsing and main logic to `googler_ng/ui/cli.py`
+- `[ ]` Phase 7: Assembly & Cleanup
+  - `[ ]` Link imports across newly created files using absolute imports (e.g., `from googler_ng.core.url import GoogleUrl`).
+  - `[ ]` Create `googler_ng/__main__.py` with the CLI entry point.
+  - `[ ]` Write the root `googler` executable shell script to be a lightweight thin wrapper that imports from the `googler_ng` package.
+  - `[ ]` Delete the leftover redundant code from the original monolithic `googler.py` file (or delete the file entirely if everything is migrated).
+- `[ ]` Phase 8: Verification - user input required
